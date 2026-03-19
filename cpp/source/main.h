@@ -28,3 +28,6 @@ inline float clamp(float x, float min, float max) {
     if (x > max) return max;
     return x;
 }
+
+// lol
+#define function void

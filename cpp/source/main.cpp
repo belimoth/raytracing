@@ -17,7 +17,7 @@ const int image_width = 400 * scale;
 const int image_height = 225 * scale;
 const int max_depth = 4;
 
-// /*
+/*
 const int samples_per_pixel = 4;
 /*/
 const int samples_per_pixel = 32;
@@ -39,16 +39,7 @@ static uint8_t data[ image_width * image_height * 3 ];
 #include "png.cpp"
 // */
 
-const float viewport_height = 2.0;
-const float viewport_width = viewport_height * 16.0 / 9.0;
-const float focal_length = 1.0;
-
-const vec3 origin = { 0, 0, 0 };
-const vec3 horizontal = { viewport_width, 0, 0 };
-const vec3 vertical = { 0, viewport_height, 0 };
-
-vec3 temp = vec3{ 0, 0, focal_length };
-const vec3 lower_left_corner = origin - horizontal/2.0 - vertical/2.0 - temp;
+#include "camera.cpp"
 
 static int data_i = 0;
 
@@ -133,6 +124,7 @@ vec3 ray_color( ray r, int depth ) {
 
 int main() {
 	image_init( image_width, image_height );
+	camera_init();
 
 	material material_ground = { diffuse, { 0.8, 0.8, 0.0 } };
     // material material_center = { diffuse, { 0.7, 0.3, 0.3 } };
@@ -157,7 +149,7 @@ int main() {
 			for ( int k = 0; k < samples_per_pixel; k++ ) {
 				float u = ( i + sample_pattern[ ( k & sample_pattern_mask ) * 2 + 0 ] / 16.0 ) / ( image_width  - 1 );
 				float v = ( j + sample_pattern[ ( k & sample_pattern_mask ) * 2 + 1 ] / 16.0 ) / ( image_height - 1 );
-				ray r = { origin, lower_left_corner + u * horizontal + v * vertical + origin * -1 };
+				ray r = get_ray( c, u, v );
 				color = color + ray_color( r, 50 );
 			}
 
