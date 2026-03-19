@@ -190,13 +190,15 @@ function game_init() {
 		}
 	}
 
-	material material_0 = { glass, {}, 1.5 };
-	material material_1 = { diffuse, { 0.4, 0.2, 0.1 } };
-	material material_2 = { metal, { 0.7, 0.6, 0.5 }, 0.0 };
+	material material_0 = { diffuse, { 0.5, 0.5, 0.5 } };
+	material material_1 = { glass, {}, 1.5 };
+	material material_2 = { diffuse, { 0.4, 0.2, 0.1 } };
+	material material_3 = { metal, { 0.7, 0.6, 0.5 }, 0.0 };
 
-	spheres[ sphere_count++ ] = { {  0.0, 1.0, 0.0 }, 1.0, material_0 };
-	spheres[ sphere_count++ ] = { { -4.0, 1.0, 0.0 }, 1.0, material_1 };
-	spheres[ sphere_count++ ] = { {  4.0, 1.0, 0.0 }, 1.0, material_2 };
+	spheres[ sphere_count++ ] = { {  0.0 -1000.0, 0.0 }, 1000.0, material_0 };
+	spheres[ sphere_count++ ] = { {  0.0,    1.0, 0.0 },    1.0, material_1 };
+	spheres[ sphere_count++ ] = { { -4.0,    1.0, 0.0 },    1.0, material_2 };
+	spheres[ sphere_count++ ] = { {  4.0,    1.0, 0.0 },    1.0, material_3 };
 }
 
 int main() {
