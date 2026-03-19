@@ -17,12 +17,11 @@ const int image_width = 400 * scale;
 const int image_height = 225 * scale;
 const int max_depth = 4;
 
-/*
+// /*
 const int samples_per_pixel = 4;
 /*/
 const int samples_per_pixel = 32;
 // */
-
 
 const int sample_pattern_mask = 0b11;
 const int sample_pattern[8] = {
@@ -136,13 +135,17 @@ int main() {
 	image_init( image_width, image_height );
 
 	material material_ground = { diffuse, { 0.8, 0.8, 0.0 } };
-    material material_center = { diffuse, { 0.7, 0.3, 0.3 } };
-    material material_left   = { metal,   { 0.8, 0.8, 0.8 } };
-    material material_right  = { metal,   { 0.8, 0.6, 0.2 } };
+    // material material_center = { diffuse, { 0.7, 0.3, 0.3 } };
+    // material material_left   = { metal,   { 0.8, 0.8, 0.8 }, 0.3 };
+    material material_right  = { metal,   { 0.8, 0.6, 0.2 }, 1.0 };
+
+	material material_center = { diffuse, { 0.1, 0.2, 0.5 } };
+	material material_left   = { glass, {}, 1.5 };
 
     spheres[ sphere_count++ ] = { {  0.0, -100.5, -1.0 }, 100.0, material_ground };
 	spheres[ sphere_count++ ] = { {  0.0,    0.0, -1.0 },   0.5, material_center };
     spheres[ sphere_count++ ] = { { -1.0,    0.0, -1.0 },   0.5, material_left   };
+	spheres[ sphere_count++ ] = { { -1.0,    0.0, -1.0 },  -0.4, material_left   };
     spheres[ sphere_count++ ] = { {  1.0,    0.0, -1.0 },   0.5, material_right  };
 
 	for ( int j = image_height - 1; j >= 0; j-- ) {

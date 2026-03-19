@@ -20,7 +20,8 @@ hit hit_sphere( sphere s, ray r, float t_min, float t_max ) {
 		if ( temp > t_min && temp < t_max ) {
 			h.t = temp;
 			h.point = ray_at( r, h.t );
-			h.normal = ( h.point - s.center ) / s.radius;
+			vec3 outward_normal = ( h.point - s.center ) / s.radius;
+			h = set_face_normal( h, r, outward_normal );
 			h.m = s.m;
 			return h;
 		}
@@ -30,7 +31,8 @@ hit hit_sphere( sphere s, ray r, float t_min, float t_max ) {
 		if ( temp > t_min && temp < t_max ) {
 			h.t = temp;
 			h.point = ray_at( r, h.t );
-			h.normal = ( h.point - s.center ) / s.radius;
+			vec3 outward_normal = ( h.point - s.center ) / s.radius;
+			h = set_face_normal( h, r, outward_normal );
 			h.m = s.m;
 			return h;
 		}

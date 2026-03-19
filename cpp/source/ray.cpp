@@ -11,5 +11,13 @@ struct hit {
 	float t;
 	vec3 point;
 	vec3 normal;
+	bool front_face;
 	material m;
 };
+
+inline hit set_face_normal( hit h, ray r, vec3 outward_normal ) {
+	h.front_face = dot( r.direction, outward_normal ) < 0;
+	h.normal = h.front_face ? outward_normal : -outward_normal;
+
+	return h;
+}

@@ -12,6 +12,16 @@ inline vec3 operator+( const vec3 &a, const vec3 &b ) {
 	return result;
 }
 
+inline vec3 operator-( const vec3 &a ) {
+	vec3 result = {
+		-a.x,
+		-a.y,
+		-a.z
+	};
+
+	return result;
+}
+
 inline vec3 operator-( const vec3 &a, const vec3 &b ) {
 	vec3 result = {
 		a.x - b.x,
