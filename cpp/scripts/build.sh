@@ -4,4 +4,4 @@ use-visual-studio
 
 cd build
 
-cl ../main.cpp -Zi -FC -EHsc -link
+cl ../source/main.cpp -Zi -FC -EHsc -link
