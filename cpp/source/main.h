@@ -23,9 +23,9 @@ inline float random( float min, float max ) {
     return min + ( max - min ) * random();
 }
 
-inline float clamp(float x, float min, float max) {
-    if (x < min) return min;
-    if (x > max) return max;
+inline float clamp( float x, float min, float max ) {
+    if ( x < min ) return min;
+    if ( x > max ) return max;
     return x;
 }
 
