@@ -68,7 +68,16 @@ inline vec3 operator/( const vec3 &a, double b ) {
 
 inline float dot( const vec3 &a, const vec3 &b ) {
 	return a.x * b.x + a.y * b.y + a.z * b.z;
+}
 
+inline vec3 cross( const vec3 u, const vec3 &v ) {
+	vec3 result = {
+		u.y * v.z - u.z * v.y,
+		u.z * v.x - u.x * v.z,
+		u.x * v.y - u.y * v.x
+	};
+
+	return result;
 }
 
 inline float length2( const vec3 &a ) {

@@ -7,21 +7,27 @@
 #include "scatter.cpp"
 #include "sphere.cpp"
 
-// /*
+/*
 const int scale = 1;
 /*/
 const int scale = 4;
 // */
 
-const int image_width = 400 * scale;
-const int image_height = 225 * scale;
-const int max_depth = 4;
+// const int image_width = 400 * scale;
+// const int image_height = 225 * scale;
+// const int max_depth = 4;
 
-/*
-const int samples_per_pixel = 4;
-/*/
-const int samples_per_pixel = 32;
-// */
+const float aspect_ratio = 3.0 / 2.0;
+const int image_width = 1200;
+const int image_height = (int)( image_width / aspect_ratio );
+
+// /*
+// const int samples_per_pixel = 4;
+// /*/
+// const int samples_per_pixel = 32;
+// // */
+
+const int samples_per_pixel = 500;
 
 const int sample_pattern_mask = 0b11;
 const int sample_pattern[8] = {
@@ -124,21 +130,72 @@ vec3 ray_color( ray r, int depth ) {
 
 int main() {
 	image_init( image_width, image_height );
-	camera_init();
 
-	material material_ground = { diffuse, { 0.8, 0.8, 0.0 } };
+	// vec3 look_from = { -2.0, 2.0,  1.0 };
+	// vec3 look_at   = {  0.0, 0.0, -1.0 };
+	// vec3 v_up      = {  0.0, 1.0,  0.0 };
+	// camera_init( look_from, look_at, v_up, 20.0, 16.0 / 9.0 );
+
+	// vec3 look_from = { 3.0, 3.0,  2.0 };
+	// vec3 look_at   = { 0.0, 0.0, -1.0 };
+	// vec3 v_up      = { 0.0, 1.0,  0.0 };
+	// float distance_to_focus = length( look_from - look_at );
+	// float aperture = 2.0;
+	// camera_init( look_from, look_at, v_up, 20.0, 16.0 / 9.0, aperture, distance_to_focus );
+
+	vec3 look_from = { 13.0, 2.0, 3.0 };
+	vec3 look_at   = {  0.0, 0.0, 0.0 };
+	vec3 v_up      = {  0.0, 1.0, 0.0 };
+	float distance_to_focus = 10.0;
+	float aperture = 0.1;
+
+	// material material_ground = { diffuse, { 0.8, 0.8, 0.0 } };
     // material material_center = { diffuse, { 0.7, 0.3, 0.3 } };
     // material material_left   = { metal,   { 0.8, 0.8, 0.8 }, 0.3 };
-    material material_right  = { metal,   { 0.8, 0.6, 0.2 }, 1.0 };
+    // material material_right  = { metal,   { 0.8, 0.6, 0.2 }, 1.0 };
+	//
+	// material material_center = { diffuse, { 0.1, 0.2, 0.5 } };
+	// material material_left   = { glass, {}, 1.5 };
+	//
+    // spheres[ sphere_count++ ] = { {  0.0, -100.5, -1.0 }, 100.0, material_ground };
+	// spheres[ sphere_count++ ] = { {  0.0,    0.0, -1.0 },   0.5, material_center };
+    // spheres[ sphere_count++ ] = { { -1.0,    0.0, -1.0 },   0.5, material_left   };
+	// spheres[ sphere_count++ ] = { { -1.0,    0.0, -1.0 },  -0.4, material_left   };
+    // spheres[ sphere_count++ ] = { {  1.0,    0.0, -1.0 },   0.5, material_right  };
 
-	material material_center = { diffuse, { 0.1, 0.2, 0.5 } };
-	material material_left   = { glass, {}, 1.5 };
+	for ( int i = -11; i < 11; i++ ) {
+		for ( int j = -11; i < 11; i++ ) {
+			float choose_material = random();
+			vec3 center = { i + 0.9f * random(), 0.2f, j + 0.9f * random() };
 
-    spheres[ sphere_count++ ] = { {  0.0, -100.5, -1.0 }, 100.0, material_ground };
-	spheres[ sphere_count++ ] = { {  0.0,    0.0, -1.0 },   0.5, material_center };
-    spheres[ sphere_count++ ] = { { -1.0,    0.0, -1.0 },   0.5, material_left   };
-	spheres[ sphere_count++ ] = { { -1.0,    0.0, -1.0 },  -0.4, material_left   };
-    spheres[ sphere_count++ ] = { {  1.0,    0.0, -1.0 },   0.5, material_right  };
+			vec3 temp = { 4.0, 0.2, 0.0 };
+
+			if ( length( center - temp ) > 0.9 ) {
+				material sphere_material;
+
+				if ( choose_material > 0.8 ) {
+					vec3 albedo = { 0.0, 0.0, 0.0 };
+					sphere_material = { diffuse, albedo };
+				} else if ( choose_material > 0.95 ) {
+					vec3 albedo = { 0.0, 0.0, 0.0 };
+					float fuzz = random( 0.0, 0.5 );
+					sphere_material = { metal, albedo, fuzz };
+				} else {
+					sphere_material = { glass, {}, 1.5 };
+				}
+
+				spheres[ sphere_count++ ] = { center, 0.2, sphere_material };
+			}
+		}
+	}
+
+	material material_0 = { glass, {}, 1.5 };
+	material material_1 = { diffuse, { 0.4, 0.2, 0.1 } };
+	material material_2 = { metal, { 0.7, 0.6, 0.5 }, 0.0 };
+
+	spheres[ sphere_count++ ] = { {  0.0, 1.0, 0.0 }, 1.0, material_0 };
+	spheres[ sphere_count++ ] = { { -4.0, 1.0, 0.0 }, 1.0, material_1 };
+	spheres[ sphere_count++ ] = { {  4.0, 1.0, 0.0 }, 1.0, material_2 };
 
 	for ( int j = image_height - 1; j >= 0; j-- ) {
 		std::cerr << "\rScanlines remaining: " << j << " " << std::flush;
