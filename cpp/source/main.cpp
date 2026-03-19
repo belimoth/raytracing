@@ -13,21 +13,21 @@ const int scale = 1;
 const int scale = 4;
 // */
 
-const int image_width = 400 * scale;
-const int image_height = 225 * scale;
 const int max_depth = 4;
-
 const float aspect_ratio = 3.0 / 2.0;
-// const int image_width = 1200;
-// const int image_height = (int)( image_width / aspect_ratio );
 
-// /*
-// const int samples_per_pixel = 4;
-// /*/
+// const int image_width = 400 * scale;
+// const int image_height = 225 * scale;
+
+const int image_width = 1200;
+const int image_height = (int)( image_width / aspect_ratio );
+
+ /*
+const int samples_per_pixel = 4;
+/*/
 // const int samples_per_pixel = 32;
-// // */
-
 const int samples_per_pixel = 500;
+// */
 
 const int sample_pattern_mask = 0b11;
 const int sample_pattern[8] = {
@@ -165,20 +165,20 @@ function game_init() {
     // spheres[ sphere_count++ ] = { {  1.0,    0.0, -1.0 },   0.5, material_right  };
 
 	for ( int i = -11; i < 11; i++ ) {
-		for ( int j = -11; i < 11; i++ ) {
+		for ( int j = -11; j < 11; j++ ) {
 			float choose_material = random();
 			vec3 center = { i + 0.9f * random(), 0.2f, j + 0.9f * random() };
 
 			vec3 temp = { 4.0, 0.2, 0.0 };
 
-			if ( length( center - temp ) > 0.9 ) {
+			if ( length2( center - temp ) > 0.81 ) {
 				material sphere_material;
 
-				if ( choose_material > 0.8 ) {
-					vec3 albedo = { 0.0, 0.0, 0.0 };
+				if ( choose_material < 0.8 ) {
+					vec3 albedo = vec3_random() * vec3_random();
 					sphere_material = { diffuse, albedo };
-				} else if ( choose_material > 0.95 ) {
-					vec3 albedo = { 0.0, 0.0, 0.0 };
+				} else if ( choose_material < 0.95 ) {
+					vec3 albedo = vec3_random( 0.5, 1.0 );
 					float fuzz = random( 0.0, 0.5 );
 					sphere_material = { metal, albedo, fuzz };
 				} else {
@@ -195,10 +195,10 @@ function game_init() {
 	material material_2 = { diffuse, { 0.4, 0.2, 0.1 } };
 	material material_3 = { metal, { 0.7, 0.6, 0.5 }, 0.0 };
 
-	spheres[ sphere_count++ ] = { {  0.0 -1000.0, 0.0 }, 1000.0, material_0 };
-	spheres[ sphere_count++ ] = { {  0.0,    1.0, 0.0 },    1.0, material_1 };
-	spheres[ sphere_count++ ] = { { -4.0,    1.0, 0.0 },    1.0, material_2 };
-	spheres[ sphere_count++ ] = { {  4.0,    1.0, 0.0 },    1.0, material_3 };
+	spheres[ sphere_count++ ] = { {  0.0, -1000.0, 0.0 }, 1000.0, material_0 };
+	spheres[ sphere_count++ ] = { {  0.0,     1.0, 0.0 },    1.0, material_1 };
+	spheres[ sphere_count++ ] = { { -4.0,     1.0, 0.0 },    1.0, material_2 };
+	spheres[ sphere_count++ ] = { {  4.0,     1.0, 0.0 },    1.0, material_3 };
 }
 
 int main() {

@@ -91,3 +91,18 @@ inline float length( const vec3 &a ) {
 inline vec3 normalize( vec3 a ) {
 	return a * ( 1.0 / length( a ) );
 }
+
+vec3 vec3_random() {
+	vec3 result = {
+		random(),
+		random(),
+		random()
+	};
+
+	return result;
+}
+
+vec3 vec3_random( float min, float max ) {
+	vec3 v_min = { min, min, min };
+	return ( max - min ) * vec3_random() + v_min;
+}
