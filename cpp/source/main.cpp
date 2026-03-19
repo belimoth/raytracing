@@ -7,19 +7,19 @@
 #include "scatter.cpp"
 #include "sphere.cpp"
 
-/*
+// /*
 const int scale = 1;
 /*/
 const int scale = 4;
 // */
 
-// const int image_width = 400 * scale;
-// const int image_height = 225 * scale;
-// const int max_depth = 4;
+const int image_width = 400 * scale;
+const int image_height = 225 * scale;
+const int max_depth = 4;
 
 const float aspect_ratio = 3.0 / 2.0;
-const int image_width = 1200;
-const int image_height = (int)( image_width / aspect_ratio );
+// const int image_width = 1200;
+// const int image_height = (int)( image_width / aspect_ratio );
 
 // /*
 // const int samples_per_pixel = 4;
@@ -128,7 +128,7 @@ vec3 ray_color( ray r, int depth ) {
 	return ( 1.0 - t ) *  color_a  + t * color_b;
 }
 
-int main() {
+function game_init() {
 	image_init( image_width, image_height );
 
 	// vec3 look_from = { -2.0, 2.0,  1.0 };
@@ -148,6 +148,7 @@ int main() {
 	vec3 v_up      = {  0.0, 1.0, 0.0 };
 	float distance_to_focus = 10.0;
 	float aperture = 0.1;
+	camera_init( look_from, look_at, v_up, 20.0, aspect_ratio, aperture, distance_to_focus );
 
 	// material material_ground = { diffuse, { 0.8, 0.8, 0.0 } };
     // material material_center = { diffuse, { 0.7, 0.3, 0.3 } };
@@ -196,6 +197,14 @@ int main() {
 	spheres[ sphere_count++ ] = { {  0.0, 1.0, 0.0 }, 1.0, material_0 };
 	spheres[ sphere_count++ ] = { { -4.0, 1.0, 0.0 }, 1.0, material_1 };
 	spheres[ sphere_count++ ] = { {  4.0, 1.0, 0.0 }, 1.0, material_2 };
+}
+
+int main() {
+	game_init();
+
+	if ( ! camera_cue ) {
+		abort();
+	}
 
 	for ( int j = image_height - 1; j >= 0; j-- ) {
 		std::cerr << "\rScanlines remaining: " << j << " " << std::flush;

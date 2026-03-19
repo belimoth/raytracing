@@ -1,3 +1,5 @@
+bool camera_cue = false;
+
 struct camera {
 	vec3 origin;
 	vec3 lower_left_corner;
@@ -68,4 +70,6 @@ function camera_init(
 	c.lower_left_corner = c.origin - c.horizontal / 2.0 - c.vertical / 2.0 - focus_distance * c.w;
 
 	c.lens_radius = aperture / 2.0;
+
+	camera_cue = true;
 }
