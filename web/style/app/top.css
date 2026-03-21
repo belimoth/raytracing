@@ -1,0 +1,78 @@
+top {
+	display: flex;
+	height: 32px;
+	line-height: 31px;
+	z-index: 100;
+}
+
+top > * {
+	height: 32px;
+}
+
+top > img {
+	flex-grow: 0;
+	width: 32px;
+}
+
+top > t {
+	padding: 0 8px;
+}
+
+top > ul {
+	display: flex;
+}
+
+top > ul > li {
+	position: relative;
+}
+
+top > ul > li > a {
+	padding: 0 12px;
+}
+
+top > ul > li > a {
+	display: block;
+}
+
+top > ul > li > ul {
+	position: absolute;
+	top: 31px;
+
+
+	width: 150px;
+	line-height: 32px;
+	padding: 1px;
+
+	border: 1px solid;
+
+}
+
+top > ul > li:not( .active ) > ul {
+	display: none;
+	pointer-events: none;
+}
+
+top > ul > li > ul > li > a {
+	padding: 0 11px;
+}
+
+traffic {
+    flex-grow: 1;
+    display: flex;
+}
+
+traffic::before {
+    content: "";
+    flex-grow: 1;
+}
+
+
+
+
+top > t {
+	padding: 0 8px;
+}
+
+top a {
+	padding: 0 8px;
+}

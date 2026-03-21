@@ -1,0 +1,11 @@
+@import "./app/reset.css";
+/* @import "./app/layout.css"; */
+@import "./app/top.css";
+@import "./theme.css";
+
+body {
+	display: grid;
+
+canvas {
+	border: 1px solid #FFF;
+}
