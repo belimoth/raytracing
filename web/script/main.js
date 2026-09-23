@@ -404,7 +404,6 @@ main_draw[0x1D] = function( data, size, i, x, y ) {
 	push( data, i, color );
 };
 
-
 async function main() {
 	let size = { x : 320, y : 240 };
 	let device_size = { x : Math.floor( size.x / window.devicePixelRatio ), y : Math.floor( size.y / window.devicePixelRatio ) };
